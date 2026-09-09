@@ -4,12 +4,11 @@
 effect-pool:
   - SPEED
   - STRENGTH
-  - JUMP_BOOST
-  - REGENERATION
   - HASTE
   - RESISTANCE
-  - SATURATION
-  - LUCK
+  - WEAVING
+  - DOLPHINS_GRACE
+  - HERO_OF_THE_VILLAGE
 
 # Maksymalny poziom efektu (1 = np. Speed I, 2 = np. Speed II)
 max-level: 2

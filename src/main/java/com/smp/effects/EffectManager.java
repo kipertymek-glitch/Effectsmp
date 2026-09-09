@@ -109,12 +109,34 @@ public class EffectManager {
     /**
      * Całkowicie usuwa efekt gracza (np. gdy zginie z ulepszonym efektem).
      */
+      /**
+     * Całkowicie usuwa efekt gracza (np. po użyciu Totemu Nieśmiertelności).
+     */
     public void removeEffectEntirely(Player player) {
         PlayerEffectData data = cache.remove(player.getUniqueId());
         if (data != null) {
             removePotionEffect(player, data.getEffectTypeName());
             saveAll();
         }
+    }
+
+    /**
+     * Obniża poziom efektu gracza o 1 (minimum poziom 1) - używane przy normalnej śmierci.
+     * Efekt nie znika całkowicie, traci się tylko ewentualny bonus z Ulepszacza.
+     * Zwraca true jeśli poziom faktycznie się obniżył.
+     */
+    public boolean downgradeLevel(Player player) {
+        PlayerEffectData data = cache.get(player.getUniqueId());
+        if (data == null) {
+            return false;
+        }
+        if (data.getLevel() <= 1) {
+            return false;
+        }
+        data.setLevel(data.getLevel() - 1);
+        applyEffect(player);
+        saveAll();
+        return true;
     }
 
     /**

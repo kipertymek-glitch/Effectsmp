@@ -113,7 +113,11 @@ public final class SMPEffects extends JavaPlugin implements CommandExecutor, Lis
 
         NamespacedKey upgradeKey = new NamespacedKey(this, "effect_upgrade_recipe");
         ShapedRecipe recipe1 = new ShapedRecipe(upgradeKey, upgradeBook);
-        recipe1.shape(" D ", " Dd", "   ");
+        recipe1.shape(" H ", " H ", " S ");
+        recipe1.setIngredient('H', Material.PLAYER_HEAD);
+        recipe1.setIngredient('S', Material.NETHER_STAR);
+        
+        Bukkit.addRecipe(recipe1);
     }
 
     @EventHandler

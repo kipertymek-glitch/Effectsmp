@@ -1,11 +1,12 @@
 name: SMPEffects
 version: 1.0
 main: pl.smp.effects.SMPEffects
-api-version: 1.21
+api-version: '1.21'
 commands:
   smpstart:
     description: Przydziela wszystkim losowe efekty SMP
     permission: smpeffects.admin
+    permission-message: Nie masz uprawnień do tej komendy!
 permissions:
   smpeffects.admin:
     default: op

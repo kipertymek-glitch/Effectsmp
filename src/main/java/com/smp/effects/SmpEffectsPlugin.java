@@ -4,6 +4,7 @@ import com.smp.effects.commands.SmpCommand;
 import com.smp.effects.listeners.DeathListener;
 import com.smp.effects.listeners.ItemUseListener;
 import com.smp.effects.listeners.JoinListener;
+import com.smp.effects.listeners.TotemListener;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +30,7 @@ public final class SmpEffectsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathListener(this), this);
         getServer().getPluginManager().registerEvents(new ItemUseListener(this), this);
+        getServer().getPluginManager().registerEvents(new TotemListener(this), this);
 
         registerRecipes();
 
@@ -44,14 +46,14 @@ public final class SmpEffectsPlugin extends JavaPlugin {
     }
 
     private void registerRecipes() {
-        // Ulepszacz Efektu: 4x głowa gracza + 4x złote jabłko + 1x diament
+        // Ulepszacz Efektu: 1x głowa gracza + 4x blok diamentu + 4x złote jabłko
         NamespacedKey upgraderRecipeKey = new NamespacedKey(this, "smp_upgrader_recipe");
         ItemStack upgraderResult = customItems.createUpgraderItem();
         ShapedRecipe upgraderRecipe = new ShapedRecipe(upgraderRecipeKey, upgraderResult);
-        upgraderRecipe.shape("PGP", "GDG", "PGP");
-        upgraderRecipe.setIngredient('P', Material.PLAYER_HEAD);
+        upgraderRecipe.shape("DGD", "GPG", "DGD");
+        upgraderRecipe.setIngredient('D', Material.DIAMOND_BLOCK);
         upgraderRecipe.setIngredient('G', Material.GOLDEN_APPLE);
-        upgraderRecipe.setIngredient('D', Material.DIAMOND);
+        upgraderRecipe.setIngredient('P', Material.PLAYER_HEAD);
         getServer().addRecipe(upgraderRecipe);
 
         // Losowanie Efektu: 2x głowa gracza + 1x perła Endermana + 1x sztabka złota

@@ -6,7 +6,7 @@
 
     <groupId>pl.smp.effects</groupId>
     <artifactId>SMPEffects</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>SMPEffects</name>
@@ -17,6 +17,7 @@
     </properties>
 
     <build>
+        <finalName>SMPEffects</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

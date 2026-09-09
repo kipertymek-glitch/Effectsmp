@@ -47,7 +47,7 @@ public final class SMPEffects extends JavaPlugin implements CommandExecutor, Lis
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("smpstart")) {
             if (!sender.hasPermission("smpeffects.admin")) {
-                sender.sendMessage(ChatColor.RED + "Nie masz uprawnień!");
+                sender.sendMessage(ChatColor.RED + "Nie masz uprawnień do tej komendy!");
                 return true;
             }
 

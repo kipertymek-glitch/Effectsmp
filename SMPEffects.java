@@ -26,10 +26,10 @@ public final class SMPEffects extends JavaPlugin implements CommandExecutor, Lis
 
     private final List<PotionEffectType> allowedEffects = Arrays.asList(
             PotionEffectType.SPEED,
-            PotionEffectType.INCREASE_DAMAGE, // Strength
-            PotionEffectType.FAST_DIGGING,    // Haste
-            PotionEffectType.DAMAGE_RESISTANCE,
-            PotionEffectType.JUMP
+            PotionEffectType.STRENGTH,
+            PotionEffectType.HASTE,
+            PotionEffectType.RESISTANCE,
+            PotionEffectType.JUMP_BOOST
     );
 
     private final Map<UUID, PotionEffectType> playerEffects = new HashMap<>();
@@ -40,7 +40,7 @@ public final class SMPEffects extends JavaPlugin implements CommandExecutor, Lis
         Objects.requireNonNull(getCommand("smpstart")).setExecutor(this);
         getServer().getPluginManager().registerEvents(this, this);
         registerCustomRecipes();
-        getLogger().info("SMPEffects zostal uruchomiony!");
+        getLogger().info("SMPEffects zostal uruchomiony poprawnie!");
     }
 
     @Override
@@ -74,7 +74,7 @@ public final class SMPEffects extends JavaPlugin implements CommandExecutor, Lis
         int level = playerLevels.getOrDefault(uuid, 1) - 1;
 
         player.removePotionEffect(type);
-        player.addPotionEffect(new PotionEffect(type, Integer.MAX_VALUE, level, true, false, true));
+        player.addPotionEffect(new PotionEffect(type, PotionEffect.INFINITE_DURATION, level, true, false, true));
     }
 
     @EventHandler
@@ -148,10 +148,10 @@ public final class SMPEffects extends JavaPlugin implements CommandExecutor, Lis
 
     private String formatEffectName(PotionEffectType type) {
         if (type.equals(PotionEffectType.SPEED)) return "Speed";
-        if (type.equals(PotionEffectType.INCREASE_DAMAGE)) return "Strength";
-        if (type.equals(PotionEffectType.FAST_DIGGING)) return "Haste";
-        if (type.equals(PotionEffectType.DAMAGE_RESISTANCE)) return "Resistance";
-        if (type.equals(PotionEffectType.JUMP)) return "Jump Boost";
+        if (type.equals(PotionEffectType.STRENGTH)) return "Strength";
+        if (type.equals(PotionEffectType.HASTE)) return "Haste";
+        if (type.equals(PotionEffectType.RESISTANCE)) return "Resistance";
+        if (type.equals(PotionEffectType.JUMP_BOOST)) return "Jump Boost";
         return type.getName();
     }
 }

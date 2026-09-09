@@ -5,6 +5,7 @@ import com.smp.effects.SmpEffectsPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class JoinListener implements Listener {
 
@@ -22,6 +23,19 @@ public class JoinListener implements Listener {
             // opóźnienie, aby efekt nałożył się poprawnie po pełnym załadowaniu gracza
             plugin.getServer().getScheduler().runTaskLater(plugin,
                     () -> effectManager.applyEffect(event.getPlayer()), 20L);
+        }
+    }
+
+    /**
+     * Minecraft domyślnie czyści wszystkie efekty mikstur przy odrodzeniu po śmierci.
+     * Musimy nałożyć zapisany (ewentualnie obniżony) efekt ponownie zaraz po respawnie,
+     * inaczej efekt "znika" wizualnie mimo że dane gracza są nienaruszone.
+     */
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        if (effectManager.hasEffect(event.getPlayer().getUniqueId())) {
+            plugin.getServer().getScheduler().runTaskLater(plugin,
+                    () -> effectManager.applyEffect(event.getPlayer()), 1L);
         }
     }
 }

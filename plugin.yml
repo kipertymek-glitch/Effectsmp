@@ -2,3 +2,10 @@ name: SMPEffects
 version: 1.0
 main: pl.smp.effects.SMPEffects
 api-version: '1.21'
+commands:
+  smpstart:
+    description: Start SMP
+    permission: smpeffects.admin
+permissions:
+  smpeffects.admin:
+    default: op

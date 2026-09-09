@@ -27,24 +27,22 @@ public class DeathListener implements Listener {
         Player victim = event.getEntity();
         Player killer = victim.getKiller();
 
-        if (killer == null) {
-            return;
+        // Zabójca (jeśli to gracz) dostaje głowę ofiary - surowiec do craftingu.
+        if (killer != null) {
+            ItemStack head = customItems.createPlayerHead(victim);
+            if (killer.getInventory().firstEmpty() != -1) {
+                killer.getInventory().addItem(head);
+            } else {
+                killer.getWorld().dropItemNaturally(killer.getLocation(), head);
+            }
+            killer.sendMessage(effectManager.msg("kill-head-received").replace("%player%", victim.getName()));
         }
 
-        // Zabójca dostaje głowę ofiary - surowiec do craftingu.
-        ItemStack head = customItems.createPlayerHead(victim);
-        if (killer.getInventory().firstEmpty() != -1) {
-            killer.getInventory().addItem(head);
-        } else {
-            killer.getWorld().dropItemNaturally(killer.getLocation(), head);
-        }
-        killer.sendMessage(effectManager.msg("kill-head-received").replace("%player%", victim.getName()));
-
-        // Jeśli ofiara miała ulepszony efekt (poziom > 1), efekt znika całkowicie.
+        // Każda śmierć obniża poziom efektu o 1 (efekt nie znika całkowicie).
         PlayerEffectData data = effectManager.getData(victim.getUniqueId());
-        if (data != null && data.getLevel() > 1) {
-            effectManager.removeEffectEntirely(victim);
-            victim.sendMessage(effectManager.msg("effect-stolen-notice").replace("%killer%", killer.getName()));
+        if (data != null && effectManager.downgradeLevel(victim)) {
+            victim.sendMessage(effectManager.msg("effect-downgraded")
+                    .replace("%level%", effectManager.toRoman(data.getLevel())));
         }
     }
 }

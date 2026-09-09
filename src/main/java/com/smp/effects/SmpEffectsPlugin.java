@@ -1,6 +1,7 @@
 package com.smp.effects;
 
 import com.smp.effects.commands.SmpCommand;
+import com.smp.effects.listeners.BrewingBlockListener;
 import com.smp.effects.listeners.DeathListener;
 import com.smp.effects.listeners.ItemUseListener;
 import com.smp.effects.listeners.JoinListener;
@@ -31,6 +32,7 @@ public final class SmpEffectsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathListener(this), this);
         getServer().getPluginManager().registerEvents(new ItemUseListener(this), this);
         getServer().getPluginManager().registerEvents(new TotemListener(this), this);
+        getServer().getPluginManager().registerEvents(new BrewingBlockListener(this), this);
 
         registerRecipes();
 

@@ -7,7 +7,6 @@ import com.smp.effects.listeners.JoinListener;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -59,9 +58,9 @@ public final class SmpEffectsPlugin extends JavaPlugin {
         NamespacedKey rerollRecipeKey = new NamespacedKey(this, "smp_reroll_recipe");
         ItemStack rerollResult = customItems.createRerollItem();
         ShapelessRecipe rerollRecipe = new ShapelessRecipe(rerollRecipeKey, rerollResult);
-        rerollRecipe.addIngredient(2, new RecipeChoice.MaterialChoice(Material.PLAYER_HEAD));
-        rerollRecipe.addIngredient(new RecipeChoice.MaterialChoice(Material.ENDER_PEARL));
-        rerollRecipe.addIngredient(new RecipeChoice.MaterialChoice(Material.GOLD_INGOT));
+        rerollRecipe.addIngredient(2, Material.PLAYER_HEAD);
+        rerollRecipe.addIngredient(1, Material.ENDER_PEARL);
+        rerollRecipe.addIngredient(1, Material.GOLD_INGOT);
         getServer().addRecipe(rerollRecipe);
     }
 

@@ -1,0 +1,33 @@
+# Pula zbalansowanych efektów, z których losowany jest jeden stały efekt dla gracza.
+# Dozwolone wartości: dowolna nazwa PotionEffectType z Bukkit/Paper, np. SPEED, STRENGTH,
+# JUMP_BOOST, REGENERATION, HASTE, RESISTANCE, SATURATION, LUCK, FIRE_RESISTANCE
+effect-pool:
+  - SPEED
+  - STRENGTH
+  - JUMP_BOOST
+  - REGENERATION
+  - HASTE
+  - RESISTANCE
+  - SATURATION
+  - LUCK
+
+# Maksymalny poziom efektu (1 = np. Speed I, 2 = np. Speed II)
+max-level: 2
+
+# Ile poziomów heartu (0-based amplifier) dodaje jeden upgrade
+level-step: 1
+
+messages:
+  prefix: "&8[&bSMP&8] &r"
+  no-permission: "&cNie masz uprawnień do tej komendy."
+  start-broadcast: "&aKażdy gracz otrzymał losowy, stały efekt! Powodzenia!"
+  effect-assigned: "&eTwój losowy efekt to: &b%effect% %level%"
+  already-has-effect: "&cTen gracz ma już przypisany efekt."
+  upgrade-success: "&aUlepszono Twój efekt do poziomu %level%!"
+  upgrade-max: "&cTwój efekt jest już na maksymalnym poziomie!"
+  upgrade-no-effect: "&cNie masz jeszcze żadnego efektu do ulepszenia."
+  reroll-success: "&aTwój nowy losowy efekt to: &b%effect% %level%"
+  reroll-no-effect: "&cNie masz jeszcze żadnego efektu do zrerollowania."
+  kill-head-received: "&eZdobyłeś głowę gracza %player%!"
+  effect-lost-on-death: "&cTwój ulepszony efekt zniknął, ponieważ zginąłeś!"
+  effect-stolen-notice: "&e%killer% zabił Cię i sprawił, że Twój efekt przepadł!"

@@ -1,0 +1,18 @@
+name: SmpEffects
+version: '1.0.0'
+main: com.smp.effects.SmpEffectsPlugin
+api-version: '1.20'
+author: Claude
+description: Losowe stałe efekty dla graczy SMP z systemem upgrade'ów i krafcingu na głowy graczy.
+
+commands:
+  smp:
+    description: Zarządzanie pluginem SmpEffects
+    usage: /smp <start|effect|reset|help>
+    permission: smp.admin
+    permission-message: Nie masz uprawnień do tej komendy.
+
+permissions:
+  smp.admin:
+    description: Dostęp do komend administracyjnych SmpEffects
+    default: op

@@ -39,10 +39,14 @@ public class DeathListener implements Listener {
         }
 
         // Każda śmierć obniża poziom efektu o 1 (efekt nie znika całkowicie).
+        // Gracz, który stracił poziom (miał na sobie ulepszenie), upuszcza po sobie
+        // przedmiot Ulepszacza - jego "upgrade" fizycznie wypada z niego.
         PlayerEffectData data = effectManager.getData(victim.getUniqueId());
         if (data != null && effectManager.downgradeLevel(victim)) {
             victim.sendMessage(effectManager.msg("effect-downgraded")
                     .replace("%level%", effectManager.toRoman(data.getLevel())));
+            ItemStack droppedUpgrader = customItems.createUpgraderItem();
+            victim.getWorld().dropItemNaturally(victim.getLocation(), droppedUpgrader);
         }
     }
 }

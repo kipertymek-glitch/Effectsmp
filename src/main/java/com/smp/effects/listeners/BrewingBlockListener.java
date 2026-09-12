@@ -8,15 +8,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.BrewEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
 
 /**
  * Blokuje ekonomię mikstur na serwerze, żeby stałe efekty z pluginu (zdobywane
  * przez /smp start i craft) miały realne znaczenie i nie dało się ich obejść
- * warząc zwykłe mikstury.
+ * warząc zwykłe mikstury. Wyjątkiem jest Weakness (potrzebna np. do leczenia
+ * zombie-mieszkańców), która nadal da się uwarzyć.
  *
  * - Nie da się zebrać brodawki Nether (rośnie, ale nie można jej złamać).
- * - Nawet gdyby ktoś zdobył brodawkę skądinąd (np. ze skrzyni w Nether Fortress),
- *   warzenie w warzelni jest całkowicie zablokowane.
+ * - Warzenie w warzelni jest zablokowane dla wszystkiego OPRÓCZ Weakness.
  */
 public class BrewingBlockListener implements Listener {
 
@@ -40,6 +43,20 @@ public class BrewingBlockListener implements Listener {
 
     @EventHandler
     public void onBrew(BrewEvent event) {
-        event.setCancelled(true);
+        boolean isWeakness = false;
+        for (ItemStack result : event.getResults()) {
+            if (result == null) {
+                continue;
+            }
+            if (result.getItemMeta() instanceof PotionMeta potionMeta) {
+                if (potionMeta.getBasePotionType() == PotionType.WEAKNESS) {
+                    isWeakness = true;
+                    break;
+                }
+            }
+        }
+        if (!isWeakness) {
+            event.setCancelled(true);
+        }
     }
 }

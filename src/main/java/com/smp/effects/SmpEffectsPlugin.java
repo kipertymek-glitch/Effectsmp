@@ -66,6 +66,7 @@ public final class SmpEffectsPlugin extends JavaPlugin {
         rerollRecipe.setIngredient('G', Material.GOLD_BLOCK);
         rerollRecipe.setIngredient('N', Material.NETHERITE_INGOT);
         getServer().addRecipe(rerollRecipe);
+    }
 
     public EffectManager getEffectManager() {
         return effectManager;

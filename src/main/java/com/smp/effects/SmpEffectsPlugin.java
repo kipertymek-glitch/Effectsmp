@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SmpEffectsPlugin extends JavaPlugin {
@@ -58,15 +57,15 @@ public final class SmpEffectsPlugin extends JavaPlugin {
         upgraderRecipe.setIngredient('P', Material.PLAYER_HEAD);
         getServer().addRecipe(upgraderRecipe);
 
-        // Losowanie Efektu: 2x głowa gracza + 1x perła Endermana + 1x sztabka złota
+        // Losowanie Efektu: 1x sztabka netherytu + 4x blok diamentu + 4x blok złota
         NamespacedKey rerollRecipeKey = new NamespacedKey(this, "smp_reroll_recipe");
         ItemStack rerollResult = customItems.createRerollItem();
-        ShapelessRecipe rerollRecipe = new ShapelessRecipe(rerollRecipeKey, rerollResult);
-        rerollRecipe.addIngredient(2, Material.PLAYER_HEAD);
-        rerollRecipe.addIngredient(1, Material.ENDER_PEARL);
-        rerollRecipe.addIngredient(1, Material.GOLD_INGOT);
+        ShapedRecipe rerollRecipe = new ShapedRecipe(rerollRecipeKey, rerollResult);
+        rerollRecipe.shape("DGD", "GNG", "DGD");
+        rerollRecipe.setIngredient('D', Material.DIAMOND_BLOCK);
+        rerollRecipe.setIngredient('G', Material.GOLD_BLOCK);
+        rerollRecipe.setIngredient('N', Material.NETHERITE_INGOT);
         getServer().addRecipe(rerollRecipe);
-    }
 
     public EffectManager getEffectManager() {
         return effectManager;

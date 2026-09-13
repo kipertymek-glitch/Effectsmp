@@ -54,13 +54,18 @@ public class DataStore {
         return map;
     }
 
-    public void saveAll(Map<UUID, PlayerEffectData> data) {
+    public boolean loadActive() {
+        return yaml.getBoolean("active", false);
+    }
+
+    public void saveAll(Map<UUID, PlayerEffectData> data, boolean active) {
         yaml.set("players", null); // czyścimy przed zapisem
         for (Map.Entry<UUID, PlayerEffectData> entry : data.entrySet()) {
             String path = "players." + entry.getKey();
             yaml.set(path + ".type", entry.getValue().getEffectTypeName());
             yaml.set(path + ".level", entry.getValue().getLevel());
         }
+        yaml.set("active", active);
         try {
             yaml.save(file);
         } catch (IOException e) {

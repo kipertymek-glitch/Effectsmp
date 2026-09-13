@@ -1,6 +1,7 @@
 package com.smp.effects;
 
 import com.smp.effects.commands.SmpCommand;
+import com.smp.effects.commands.SmpTabCompleter;
 import com.smp.effects.listeners.BrewingBlockListener;
 import com.smp.effects.listeners.DeathListener;
 import com.smp.effects.listeners.ItemUseListener;
@@ -26,6 +27,7 @@ public final class SmpEffectsPlugin extends JavaPlugin {
         effectManager.load();
 
         getCommand("smp").setExecutor(new SmpCommand(this));
+        getCommand("smp").setTabCompleter(new SmpTabCompleter());
 
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathListener(this), this);

@@ -22,6 +22,7 @@ public class EffectManager {
     private final DataStore dataStore;
     private final Map<UUID, PlayerEffectData> cache = new HashMap<>();
     private final Random random = new Random();
+    private boolean eventActive = false;
 
     public EffectManager(SmpEffectsPlugin plugin) {
         this.plugin = plugin;
@@ -32,10 +33,24 @@ public class EffectManager {
         dataStore.load();
         cache.clear();
         cache.putAll(dataStore.loadAll());
+        eventActive = dataStore.loadActive();
     }
 
     public void saveAll() {
-        dataStore.saveAll(cache);
+        dataStore.saveAll(cache, eventActive);
+    }
+
+    /**
+     * Czy wydarzenie SMP jest aktywne. Gdy tak, każdy nowo dołączający gracz
+     * automatycznie dostaje losowy efekt (patrz JoinListener).
+     */
+    public boolean isEventActive() {
+        return eventActive;
+    }
+
+    public void setEventActive(boolean active) {
+        this.eventActive = active;
+        saveAll();
     }
 
     public List<String> getEffectPool() {
@@ -56,6 +71,7 @@ public class EffectManager {
 
     /**
      * Losuje i przypisuje graczowi nowy, stały efekt z puli (poziom 1).
+     * Automatycznie wysyła graczowi wiadomość o przypisanym efekcie.
      */
     public PlayerEffectData assignRandomEffect(Player player) {
         List<String> pool = getEffectPool();
@@ -67,6 +83,9 @@ public class EffectManager {
         cache.put(player.getUniqueId(), data);
         applyEffect(player);
         saveAll();
+        player.sendMessage(msg("effect-assigned")
+                .replace("%effect%", formatEffectName(data.getEffectTypeName()))
+                .replace("%level%", toRoman(data.getLevel())));
         return data;
     }
 
@@ -107,9 +126,6 @@ public class EffectManager {
     }
 
     /**
-     * Całkowicie usuwa efekt gracza (np. gdy zginie z ulepszonym efektem).
-     */
-      /**
      * Całkowicie usuwa efekt gracza (np. po użyciu Totemu Nieśmiertelności).
      */
     public void removeEffectEntirely(Player player) {

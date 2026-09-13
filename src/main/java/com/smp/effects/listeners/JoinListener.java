@@ -23,6 +23,10 @@ public class JoinListener implements Listener {
             // opóźnienie, aby efekt nałożył się poprawnie po pełnym załadowaniu gracza
             plugin.getServer().getScheduler().runTaskLater(plugin,
                     () -> effectManager.applyEffect(event.getPlayer()), 20L);
+        } else if (effectManager.isEventActive()) {
+            // wydarzenie SMP jest aktywne (po /smp start) - nowy gracz od razu dostaje losowy efekt
+            plugin.getServer().getScheduler().runTaskLater(plugin,
+                    () -> effectManager.assignRandomEffect(event.getPlayer()), 20L);
         }
     }
 

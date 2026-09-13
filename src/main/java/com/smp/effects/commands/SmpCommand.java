@@ -36,6 +36,9 @@ public class SmpCommand implements CommandExecutor {
             case "start":
                 handleStart(sender);
                 return true;
+            case "stop":
+                handleStop(sender);
+                return true;
             case "effect":
                 handleEffectInfo(sender, args);
                 return true;
@@ -49,19 +52,23 @@ public class SmpCommand implements CommandExecutor {
     }
 
     private void handleStart(CommandSender sender) {
+        effectManager.setEventActive(true);
         int count = 0;
         for (Player online : Bukkit.getOnlinePlayers()) {
-            PlayerEffectData data = effectManager.assignRandomEffect(online);
-            if (data != null) {
-                String text = effectManager.msg("effect-assigned")
-                        .replace("%effect%", effectManager.formatEffectName(data.getEffectTypeName()))
-                        .replace("%level%", effectManager.toRoman(data.getLevel()));
-                online.sendMessage(text);
+            if (effectManager.assignRandomEffect(online) != null) {
                 count++;
             }
         }
         Bukkit.broadcastMessage(effectManager.msg("start-broadcast"));
-        sender.sendMessage(ChatColor.GREEN + "Przypisano losowe efekty " + count + " graczom.");
+        sender.sendMessage(ChatColor.GREEN + "Przypisano losowe efekty " + count
+                + " graczom. Nowo dołączający gracze też będą dostawać efekt automatycznie.");
+    }
+
+    private void handleStop(CommandSender sender) {
+        effectManager.setEventActive(false);
+        sender.sendMessage(ChatColor.YELLOW
+                + "Wydarzenie SMP zatrzymane. Nowo dołączający gracze nie dostaną już efektu"
+                + " (już przypisane efekty pozostają bez zmian).");
     }
 
     private void handleEffectInfo(CommandSender sender, String[] args) {
@@ -100,7 +107,10 @@ public class SmpCommand implements CommandExecutor {
 
     private void sendHelp(CommandSender sender) {
         sender.sendMessage(ChatColor.GOLD + "--- SmpEffects ---");
-        sender.sendMessage(ChatColor.YELLOW + "/smp start " + ChatColor.GRAY + "- losuje efekty wszystkim online");
+        sender.sendMessage(ChatColor.YELLOW + "/smp start " + ChatColor.GRAY
+                + "- losuje efekty wszystkim online i włącza auto-przydzielanie nowym graczom");
+        sender.sendMessage(ChatColor.YELLOW + "/smp stop " + ChatColor.GRAY
+                + "- wyłącza auto-przydzielanie efektów nowym graczom");
         sender.sendMessage(ChatColor.YELLOW + "/smp effect <gracz> " + ChatColor.GRAY + "- pokazuje efekt gracza");
         sender.sendMessage(ChatColor.YELLOW + "/smp reset <gracz> " + ChatColor.GRAY + "- usuwa efekt gracza");
     }
